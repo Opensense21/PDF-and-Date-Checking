@@ -13,6 +13,7 @@ import {
   Download, 
   Trash2, 
   ChevronRight, 
+  ChevronLeft,
   Sun, 
   Moon,
   LayoutDashboard,
@@ -21,7 +22,9 @@ import {
   Info,
   Eye,
   EyeOff,
-  GripVertical
+  GripVertical,
+  History,
+  Zap
 } from 'lucide-react';
 import { motion, AnimatePresence, Reorder } from 'motion/react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
@@ -38,10 +41,94 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 
 import { cn } from './lib/utils';
-import { getSolarTerm, castHexagram, HEXAGRAMS, getAllLunarFestivals, getLunarFestivals, getLunarDate, getAuspiciousInfo, getLunarDateDetails } from './lib/cultural';
+import { getSolarTerm, castHexagram, HEXAGRAMS, getAllLunarFestivals, getLunarFestivals, getLunarDate, getAuspiciousInfo, getLunarDateDetails, getSolarTermInfo, estimateSolarDate, getWorldHistory, getGregorianHolidays, getKabbalahInsight } from './lib/cultural';
+import type { HistoryEvent } from './lib/cultural';
 
 // Set up pdfjs worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+
+const CalendarPicker = ({ selectedDate, onSelect }: { selectedDate: Date, onSelect: (date: Date) => void }) => {
+  const [viewDate, setViewDate] = useState(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1));
+  
+  const daysInMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0).getDate();
+  const firstDayOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1).getDay();
+  
+  const prevMonth = () => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1));
+  const nextMonth = () => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1));
+  
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  const emptyDays = Array.from({ length: firstDayOfMonth }, (_, i) => i);
+
+  return (
+    <div className="bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 w-full max-w-[320px]">
+      <div className="flex items-center justify-between mb-6">
+        <button onClick={prevMonth} className="p-2 hover:bg-slate-50 rounded-xl transition-colors">
+          <ChevronLeft size={18} className="text-slate-400" />
+        </button>
+        <span className="font-bold text-slate-800">
+          Tháng {viewDate.getMonth() + 1}, {viewDate.getFullYear()}
+        </span>
+        <button onClick={nextMonth} className="p-2 hover:bg-slate-50 rounded-xl transition-colors">
+          <ChevronRight size={18} className="text-slate-400" />
+        </button>
+      </div>
+      
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(d => (
+          <div key={d} className="text-center text-[10px] font-bold text-slate-400 uppercase">{d}</div>
+        ))}
+      </div>
+      
+      <div className="grid grid-cols-7 gap-1">
+        {emptyDays.map(i => <div key={`empty-${i}`} />)}
+        {days.map(d => {
+          const date = new Date(viewDate.getFullYear(), viewDate.getMonth(), d);
+          const isSelected = date.toDateString() === selectedDate.toDateString();
+          const isToday = date.toDateString() === new Date().toDateString();
+          
+          const lunar = getLunarDateDetails(date);
+          const hasLunarFestival = getLunarFestivals(lunar.day, lunar.month).length > 0;
+          const hasGregorianHoliday = getGregorianHolidays(date).length > 0;
+          const hasHistory = getWorldHistory(date).length > 0;
+          
+          return (
+            <button
+              key={d}
+              onClick={() => onSelect(date)}
+              className={cn(
+                "aspect-square rounded-xl flex flex-col items-center justify-center relative transition-all group",
+                isSelected ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/30" : "hover:bg-slate-50 text-slate-600",
+                isToday && !isSelected && "border border-brand-primary/30 text-brand-primary"
+              )}
+            >
+              <span className="text-xs font-bold">{d}</span>
+              <div className="flex gap-0.5 mt-0.5">
+                {hasLunarFestival && <div className={cn("w-1 h-1 rounded-full", isSelected ? "bg-white" : "bg-red-500")} />}
+                {hasGregorianHoliday && <div className={cn("w-1 h-1 rounded-full", isSelected ? "bg-white" : "bg-indigo-500")} />}
+                {hasHistory && <div className={cn("w-1 h-1 rounded-full", isSelected ? "bg-white" : "bg-amber-500")} />}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      
+      <div className="mt-6 pt-6 border-t border-slate-100 flex flex-wrap gap-x-4 gap-y-2 justify-center">
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+          <span className="text-[10px] text-slate-400 font-bold uppercase">Lễ hội Âm</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+          <span className="text-[10px] text-slate-400 font-bold uppercase">Lễ Dương</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <span className="text-[10px] text-slate-400 font-bold uppercase">Lịch sử</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // --- Types ---
 interface PDFFile {
@@ -230,6 +317,7 @@ export default function App() {
   const [solarTerm, setSolarTerm] = useState('');
   const [hexagram, setHexagram] = useState<number[] | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {
     setSolarTerm(getSolarTerm(selectedDate));
@@ -627,22 +715,50 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.05 }}
-                className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+                className="max-w-4xl mx-auto space-y-8"
               >
-                <div className="lg:col-span-2 space-y-8">
+                <div className="space-y-8">
                   <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
                     <div className="flex items-center justify-between mb-8">
                       <h3 className="text-2xl font-bold text-slate-800">Âm Lịch & Tiết Khí</h3>
-                      <div className="flex items-center gap-3">
-                        <input 
-                          type="date" 
-                          value={selectedDate.toISOString().split('T')[0]}
-                          onChange={(e) => setSelectedDate(new Date(e.target.value))}
-                          className="px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
-                        />
+                      <div className="flex items-center gap-3 relative">
+                        <div className="relative group">
+                          <button 
+                            onClick={() => setShowCalendar(!showCalendar)}
+                            className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:border-brand-primary/30 transition-all"
+                          >
+                            <Calendar size={18} className="text-brand-primary" />
+                            {selectedDate.toLocaleDateString('vi-VN')}
+                          </button>
+                          
+                          <AnimatePresence>
+                            {showCalendar && (
+                              <>
+                                <div 
+                                  className="fixed inset-0 z-40" 
+                                  onClick={() => setShowCalendar(false)}
+                                />
+                                <motion.div 
+                                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                  className="absolute top-full right-0 mt-2 z-50"
+                                >
+                                  <CalendarPicker 
+                                    selectedDate={selectedDate} 
+                                    onSelect={(date) => {
+                                      setSelectedDate(date);
+                                      setShowCalendar(false);
+                                    }} 
+                                  />
+                                </motion.div>
+                              </>
+                            )}
+                          </AnimatePresence>
+                        </div>
                         <button 
                           onClick={() => setSelectedDate(new Date())}
-                          className="px-4 py-1.5 bg-brand-primary/10 text-brand-primary rounded-xl text-sm font-bold hover:bg-brand-primary/20 transition-colors"
+                          className="px-4 py-2 bg-brand-primary/10 text-brand-primary rounded-xl text-sm font-bold hover:bg-brand-primary/20 transition-colors"
                         >
                           Hôm nay
                         </button>
@@ -674,7 +790,34 @@ export default function App() {
                       <div className="bg-slate-50 rounded-3xl p-6 flex flex-col items-center justify-center text-center">
                         <p className="text-sm text-slate-400 font-bold uppercase tracking-wider mb-2">Tiết Khí</p>
                         <p className="text-4xl font-black text-brand-primary mb-2">{solarTerm}</p>
-                        <p className="text-xs text-slate-500 italic">"{getSolarTerm(selectedDate)}"</p>
+                        <p className="text-sm text-slate-600 leading-relaxed max-w-xs">
+                          {getSolarTermInfo(selectedDate).description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-10 pt-10 border-t border-slate-100">
+                      <h4 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                        <Calendar size={20} className="text-brand-primary" />
+                        Lịch Vạn Niên Chi Tiết
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Trực</p>
+                          <p className="font-bold text-slate-800">{(getAuspiciousInfo(selectedDate) as any).truc}</p>
+                        </div>
+                        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Sao</p>
+                          <p className="font-bold text-slate-800">{(getAuspiciousInfo(selectedDate) as any).sao}</p>
+                        </div>
+                        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Ngũ Hành</p>
+                          <p className="font-bold text-slate-800">{(getAuspiciousInfo(selectedDate) as any).nguHanh}</p>
+                        </div>
+                        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Hướng Xuất Hành</p>
+                          <p className="font-bold text-slate-800">{(getAuspiciousInfo(selectedDate) as any).huongXuatHanh}</p>
+                        </div>
                       </div>
                     </div>
 
@@ -695,81 +838,208 @@ export default function App() {
                     <div className="mt-12">
                       <h4 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
                         <Sparkles size={20} className="text-amber-500" />
-                        Lễ Hội & Ngày Lễ Truyền Thống
+                        Lễ Hội & Ngày Lễ
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {getAllLunarFestivals().map((festival, idx) => (
-                          <div key={idx} className="bg-slate-50 rounded-2xl p-4 border border-slate-100 hover:border-brand-primary/30 transition-colors group">
+                        {/* Lunar Festivals */}
+                        {getLunarFestivals(getLunarDateDetails(selectedDate).day, getLunarDateDetails(selectedDate).month).map((festival, idx) => (
+                          <div key={`lunar-${idx}`} className="bg-amber-50 rounded-2xl p-4 border border-amber-100 transition-colors group">
                             <div className="flex items-start gap-3">
-                              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-brand-primary font-bold shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
-                                {festival.day}/{festival.month}
+                              <div className="w-12 h-12 rounded-xl bg-white flex flex-col items-center justify-center text-amber-600 font-bold shadow-sm">
+                                <span className="text-xs leading-none mb-1">{festival.day}/{festival.month}</span>
+                                <span className="text-[10px] uppercase leading-none">Âm</span>
                               </div>
                               <div>
-                                <p className="font-bold text-slate-800 group-hover:text-brand-primary transition-colors">{festival.name}</p>
+                                <p className="font-bold text-slate-800">{festival.name}</p>
                                 <p className="text-xs text-slate-500 leading-relaxed">{festival.description}</p>
                               </div>
                             </div>
                           </div>
                         ))}
+                        {/* Gregorian Holidays */}
+                        {getGregorianHolidays(selectedDate).map((holiday, idx) => (
+                          <div key={`greg-${idx}`} className="bg-indigo-50 rounded-2xl p-4 border border-indigo-100 transition-colors group">
+                            <div className="flex items-start gap-3">
+                              <div className="w-12 h-12 rounded-xl bg-white flex flex-col items-center justify-center text-indigo-600 font-bold shadow-sm">
+                                <span className="text-xs leading-none mb-1">{selectedDate.getDate()}/{selectedDate.getMonth() + 1}</span>
+                                <span className="text-[10px] uppercase leading-none">Dương</span>
+                              </div>
+                              <div>
+                                <p className="font-bold text-slate-800">{holiday}</p>
+                                <p className="text-xs text-slate-500 leading-relaxed">Ngày lễ theo lịch Dương.</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {getLunarFestivals(getLunarDateDetails(selectedDate).day, getLunarDateDetails(selectedDate).month).length === 0 && getGregorianHolidays(selectedDate).length === 0 && (
+                          <div className="col-span-full py-8 text-center text-slate-400 italic text-sm">
+                            Không có ngày lễ đặc biệt nào trong ngày này.
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mt-12">
+                      <h4 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                        <History size={20} className="text-indigo-500" />
+                        Ngày Này Năm Xưa (Lịch sử Thế giới)
+                      </h4>
+                      <div className="space-y-4">
+                        {getWorldHistory(selectedDate).map((event, idx) => (
+                          <div key={idx} className="flex gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-indigo-200 transition-all group">
+                            <div className="w-16 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-600 font-bold shadow-sm shrink-0">
+                              {event.year}
+                            </div>
+                            <div>
+                              <p className="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">
+                                {event.type === 'birth' ? 'Sinh nhật' : event.type === 'death' ? 'Ngày mất' : 'Sự kiện'}
+                              </p>
+                              <p className="text-sm text-slate-700 leading-relaxed group-hover:text-slate-900 transition-colors">
+                                {event.content}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-12">
+                      <h4 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                        <Zap size={20} className="text-purple-500" />
+                        Kabbalah & Cây Sự Sống (Tree of Life)
+                      </h4>
+                      <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-[32px] p-8 text-white relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full -mr-32 -mt-32" />
+                        <div className="relative z-10">
+                          <div className="flex flex-col md:flex-row gap-8 items-center">
+                            <div className="w-32 h-32 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-2xl shrink-0">
+                              <span className="text-5xl font-serif text-purple-300">{getKabbalahInsight(selectedDate).hebrew}</span>
+                            </div>
+                            <div className="flex-1 text-center md:text-left">
+                              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
+                                <span className="px-3 py-1 bg-purple-500/20 border border-purple-500/30 rounded-full text-[10px] font-bold uppercase tracking-widest text-purple-300">
+                                  Sephirah của ngày
+                                </span>
+                                <span className={cn("text-xl font-bold", getKabbalahInsight(selectedDate).color)}>
+                                  {getKabbalahInsight(selectedDate).name}
+                                </span>
+                              </div>
+                              <h5 className="text-2xl font-bold mb-3">{getKabbalahInsight(selectedDate).meaning}</h5>
+                              <p className="text-slate-400 text-sm leading-relaxed mb-4 max-w-xl">
+                                {getKabbalahInsight(selectedDate).description}
+                              </p>
+                              <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-6">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                  <span className="text-xs font-bold text-slate-300">Thuộc tính: {getKabbalahInsight(selectedDate).attribute}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                  <span className="text-xs font-bold text-slate-300">Tầng năng lượng: {getKabbalahInsight(selectedDate).name === 'Malkhut' ? 'Vật chất' : 'Tâm linh'}</span>
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="bg-white/5 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+                                  <p className="text-[10px] font-bold uppercase text-emerald-400 mb-2 tracking-widest">Để tăng cường năng lượng</p>
+                                  <p className="text-xs text-slate-300 leading-relaxed italic">
+                                    {getKabbalahInsight(selectedDate).toEnhance}
+                                  </p>
+                                </div>
+                                <div className="bg-white/5 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+                                  <p className="text-[10px] font-bold uppercase text-red-400 mb-2 tracking-widest">Cần tránh</p>
+                                  <p className="text-xs text-slate-300 leading-relaxed italic">
+                                    {getKabbalahInsight(selectedDate).toAvoid}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-12 pt-12 border-t border-slate-100">
+                      <h4 className="text-lg font-bold text-slate-800 mb-6">Tất cả Lễ hội Truyền thống</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {getAllLunarFestivals().map((festival, idx) => {
+                          const solarDate = estimateSolarDate(festival.day, festival.month, selectedDate.getFullYear());
+                          return (
+                            <div key={idx} className="bg-slate-50 rounded-2xl p-4 border border-slate-100 hover:border-brand-primary/30 transition-colors group">
+                              <div className="flex items-start gap-3">
+                                <div className="w-12 h-12 rounded-xl bg-white flex flex-col items-center justify-center text-brand-primary font-bold shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                                  <span className="text-xs opacity-60 leading-none mb-1">{festival.day}/{festival.month}</span>
+                                  <span className="text-[10px] uppercase leading-none">Âm</span>
+                                </div>
+                                <div>
+                                  <p className="font-bold text-slate-800 group-hover:text-brand-primary transition-colors">{festival.name}</p>
+                                  <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">
+                                    Dương lịch ước tính: {solarDate.toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric' })}
+                                  </p>
+                                  <p className="text-xs text-slate-500 leading-relaxed">{festival.description}</p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
                     <h4 className="font-bold text-slate-800 mb-4">Gợi ý từ Thu Opensense</h4>
-                    <div className={cn("p-4 rounded-2xl border text-sm leading-relaxed", getAuspiciousInfo(selectedDate).bgColor, "border-opacity-50 text-slate-700")}>
-                      Ngày <span className="font-bold">{selectedDate.toLocaleDateString('vi-VN')}</span> ({getLunarDate(selectedDate)}) là ngày <span className="font-bold">{getAuspiciousInfo(selectedDate).type}</span>. 
-                      Trong tiết <span className="font-bold">{solarTerm}</span>, {getAuspiciousInfo(selectedDate).description}
-                      Hãy sử dụng công cụ PDF của chúng tôi để chuẩn bị hồ sơ của bạn một cách thuận lợi nhất!
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="bg-brand-secondary rounded-3xl p-6 text-white overflow-hidden relative">
-                    <h4 className="font-bold mb-4 relative z-10">24 Tiết Khí</h4>
-                    <div className="space-y-3 relative z-10">
-                      {['Lập Xuân', 'Vũ Thủy', 'Kinh Trập', 'Xuân Phân'].map((term, i) => (
-                        <div key={term} className={cn(
-                          "flex items-center justify-between p-3 rounded-xl transition-colors",
-                          term === solarTerm ? "bg-white/20 border border-white/30" : "hover:bg-white/5"
-                        )}>
-                          <span className="font-medium">{term}</span>
-                          <span className="text-xs opacity-50">Tháng {i + 1}</span>
+                    <div className={cn("p-6 rounded-2xl border text-sm leading-relaxed", getAuspiciousInfo(selectedDate).bgColor, "border-opacity-50 text-slate-700")}>
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className={cn("w-2 h-2 rounded-full", getAuspiciousInfo(selectedDate).color.replace('text', 'bg'))} />
+                        <span className="font-bold uppercase tracking-widest text-[10px]">Tư vấn phong thủy & Năng suất</span>
+                      </div>
+                      <p className="mb-4">
+                        Ngày <span className="font-bold">{selectedDate.toLocaleDateString('vi-VN')}</span> ({getLunarDate(selectedDate)}) là ngày <span className="font-bold underline">{getAuspiciousInfo(selectedDate).type}</span>. 
+                      </p>
+                      <div className="space-y-4">
+                        <div className="flex gap-3">
+                          <div className="w-5 h-5 rounded-full bg-white/50 flex items-center justify-center shrink-0">✨</div>
+                          <p><strong>Tiết khí:</strong> {getSolarTermInfo(selectedDate).description}</p>
                         </div>
-                      ))}
-                    </div>
-                    <div className="absolute top-[-20px] right-[-20px] w-32 h-32 bg-white/5 rounded-full blur-3xl" />
-                  </div>
-
-                  <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                    <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                      <Calendar size={18} className="text-brand-primary" />
-                      Lịch Tháng Âm
-                    </h4>
-                    <div className="grid grid-cols-7 gap-1">
-                      {['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(day => (
-                        <div key={day} className="text-center text-[8px] font-bold text-slate-400 uppercase py-1">{day}</div>
-                      ))}
-                      {Array.from({ length: 30 }).map((_, i) => {
-                        const day = i + 1;
-                        const festivals = getLunarFestivals(day, 2); // Demo month
-                        return (
-                          <div key={i} className={cn(
-                            "aspect-square rounded-lg border flex flex-col items-center justify-center relative group transition-all",
-                            day === 15 ? "bg-brand-primary/5 border-brand-primary/20" : "border-slate-50 hover:border-brand-primary/30"
-                          )}>
-                            <span className={cn("text-[10px] font-bold", day === 15 ? "text-brand-primary" : "text-slate-600")}>{day}</span>
-                            {festivals.length > 0 && (
-                              <div className="absolute bottom-0.5 w-0.5 h-0.5 bg-amber-500 rounded-full" />
-                            )}
+                        <div className="flex gap-3">
+                          <div className="w-5 h-5 rounded-full bg-white/50 flex items-center justify-center shrink-0">☯️</div>
+                          <p><strong>Ngũ Hành:</strong> {(getAuspiciousInfo(selectedDate) as any).nguHanh} — <strong>Trực:</strong> {(getAuspiciousInfo(selectedDate) as any).truc} — <strong>Sao:</strong> {(getAuspiciousInfo(selectedDate) as any).sao}</p>
+                        </div>
+                        <div className="flex gap-3">
+                          <div className="w-5 h-5 rounded-full bg-white/50 flex items-center justify-center shrink-0">🧭</div>
+                          <p><strong>Hướng xuất hành:</strong> Nên đi về hướng <span className="font-bold">{(getAuspiciousInfo(selectedDate) as any).huongXuatHanh}</span> để gặp nhiều may mắn và thuận lợi.</p>
+                        </div>
+                        <div className="flex gap-3">
+                          <div className="w-5 h-5 rounded-full bg-white/50 flex items-center justify-center shrink-0">⏰</div>
+                          <div>
+                            <p><strong>Giờ tốt:</strong></p>
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {getAuspiciousInfo(selectedDate).bestHours?.map(h => (
+                                <span key={h} className="px-2 py-0.5 bg-white/40 rounded-lg text-[10px] font-bold">{h}</span>
+                              ))}
+                            </div>
                           </div>
-                        );
-                      })}
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-white/30 p-3 rounded-xl">
+                            <p className="text-[10px] font-bold uppercase text-emerald-600 mb-1">Nên làm</p>
+                            <ul className="list-disc list-inside text-xs space-y-1">
+                              {getAuspiciousInfo(selectedDate).suggestedActions?.map(a => <li key={a}>{a}</li>)}
+                            </ul>
+                          </div>
+                          <div className="bg-white/30 p-3 rounded-xl">
+                            <p className="text-[10px] font-bold uppercase text-red-600 mb-1">Kiêng kỵ</p>
+                            <ul className="list-disc list-inside text-xs space-y-1">
+                              {getAuspiciousInfo(selectedDate).avoidActions?.map(a => <li key={a}>{a}</li>)}
+                            </ul>
+                          </div>
+                        </div>
+                        <div className="flex gap-3">
+                          <div className="w-5 h-5 rounded-full bg-white/50 flex items-center justify-center shrink-0">💼</div>
+                          <p><strong>Công việc:</strong> Hãy sử dụng công cụ PDF của chúng tôi để chuẩn bị hồ sơ của bạn một cách thuận lợi nhất. Sắp xếp lại các tệp tin theo thứ tự ưu tiên sẽ giúp bạn quản lý thời gian hiệu quả hơn.</p>
+                        </div>
+                      </div>
                     </div>
-                    <p className="mt-3 text-[8px] text-slate-400 italic text-center leading-tight">
-                      * Ước tính cho tháng hiện tại. Các chấm vàng biểu thị ngày lễ hội.
-                    </p>
                   </div>
                 </div>
               </motion.div>
