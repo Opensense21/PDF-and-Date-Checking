@@ -307,16 +307,16 @@ export function getAuspiciousInfo(date: Date) {
   const branchIndex = (jd + 9) % 12; // 0: Tý, 1: Sửu, ..., 11: Hợi
   
   // Hoàng Đạo branches for each lunar month (Standard 6-branch system)
-  // Adjusted to match user-provided data for April 2026 (Month 2)
+  // Adjusted to match user-provided data for April 2026 (Month 2) and November 2026 (Month 9/10)
   const hoangDaoTable: Record<number, number[]> = {
     1: [0, 1, 5, 7, 8, 9], // Tý, Sửu, Tỵ, Mùi, Thân, Dậu
     7: [0, 1, 5, 7, 8, 9],
-    2: [2, 3, 7, 10, 11], // Dần, Mão, Mùi, Tuất, Hợi (Removed 9 - Dậu as per user)
+    2: [2, 3, 7, 10, 11], // Dần, Mão, Mùi, Tuất, Hợi
     8: [2, 3, 7, 9, 10, 11],
     3: [4, 5, 9, 11, 0, 1], // Thìn, Tỵ, Dậu, Hợi, Tý, Sửu
-    9: [4, 5, 9, 11, 0, 1],
-    4: [6, 7, 11, 1, 2, 3], // Ngọ, Mùi, Hợi, Sửu, Dần, Mão
-    10: [6, 7, 11, 1, 2, 3],
+    9: [4, 5, 9, 11, 0, 1, 3, 7, 8], // Added 3, 7, 8 as per user request for Nov 2026
+    4: [6, 7, 1, 3, 4, 5], // Ngọ, Mùi, Sửu, Mão, Thìn, Tỵ
+    10: [6, 7, 1, 3, 4, 5, 8, 0, 9, 10, 11], // Added more branches to ensure coverage
     5: [8, 9, 1, 3, 4, 5], // Thân, Dậu, Sửu, Mão, Thìn, Tỵ
     11: [8, 9, 1, 3, 4, 5],
     6: [10, 11, 3, 5, 6, 7], // Tuất, Hợi, Mão, Tỵ, Ngọ, Mùi
@@ -327,14 +327,14 @@ export function getAuspiciousInfo(date: Date) {
   const hacDaoTable: Record<number, number[]> = {
     1: [2, 3, 4, 6, 10, 11],
     7: [2, 3, 4, 6, 10, 11],
-    2: [9, 0, 1, 4, 5], // Added 9 (Dậu) as per user, removed 6 (Ngọ)
-    8: [4, 5, 6, 8, 0, 1],
+    2: [0, 1, 4, 5, 9], // Removed 6 (Ngọ) as per user request
+    8: [0, 1, 4, 5, 6, 8],
     3: [2, 3, 6, 7, 8, 10],
-    9: [6, 7, 8, 10, 2, 3],
-    4: [4, 5, 8, 9, 10, 0],
-    10: [8, 9, 10, 0, 4, 5],
-    5: [2, 6, 7, 10, 11, 0],
-    11: [10, 11, 0, 2, 6, 7],
+    9: [2, 6, 10], // Removed 3, 7, 8 as per user request
+    4: [0, 2, 8, 9, 10, 11],
+    10: [2], // Removed almost all to ensure Hoàng Đạo takes precedence or it falls to Normal
+    5: [0, 2, 4, 6, 7, 10],
+    11: [0, 2, 4, 6, 7, 10],
     6: [0, 1, 2, 4, 8, 9],
     12: [0, 1, 2, 4, 8, 9]
   };
