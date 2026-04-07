@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-primary: var(--brand-primary, #6366f1);
+  --color-brand-secondary: var(--brand-secondary, #1e1b4b);
+  --color-brand-accent: var(--brand-accent, #818cf8);
+}
+
+@layer base {
+  :root {
+    --brand-primary: #6366f1;
+    --brand-secondary: #1e1b4b;
+    --brand-accent: #818cf8;
+  }
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans;
+  }
+}
+
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+}
