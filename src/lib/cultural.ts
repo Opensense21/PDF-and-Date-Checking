@@ -90,132 +90,70 @@ export const HEXAGRAM_NAMES = [
 ];
 
 export const HEXAGRAMS = [
-  { 
-    id: 1, 
-    name: "Thuần Càn", 
-    symbol: "䷀", 
-    meaning: "Đạo của sự Sáng tạo và Tự cường. 'Thiên hành kiện, quân tử dĩ tự cường bất tức'.",
-    imagery: "Sáu con rồng biểu thị các giai đoạn của sự phát triển. Cần biết lúc nào nên ẩn mình (Tiềm long), lúc nào nên hành động (Phi long)."
-  },
-  { 
-    id: 2, 
-    name: "Thuần Khôn", 
-    symbol: "䷁", 
-    meaning: "Đạo của sự Nhu thuận và Bao dung. 'Địa thế khôn, quân tử dĩ hậu đức tải vật'.",
-    imagery: "Sức mạnh của đất mẹ, âm thầm nuôi dưỡng vạn vật mà không tranh công. Sự thành công đến từ việc biết phục tùng cái đúng."
-  },
-  { 
-    id: 3, 
-    name: "Thủy Lôi Truân", 
-    symbol: "䷂", 
-    meaning: "Sự gian nan lúc mới khởi đầu. Mầm sống đang tích lũy nội lực để vươn lên.",
-    imagery: "Sấm sét and mưa gió đang giao tranh. Trong sự hỗn loạn, mầm mống của trật tự mới đang hình thành. Cần kiên trì và tìm người giúp đỡ."
-  },
-  { 
-    id: 4, 
-    name: "Sơn Thủy Mông", 
-    symbol: "䷃", 
-    meaning: "Sự mờ mịt, non nớt. Đạo của việc giáo dục và khai phóng tâm trí.",
-    imagery: "Suối chảy dưới chân núi, sương mù bao phủ. Tượng trưng cho trí tuệ còn sơ khai, cần sự dẫn dắt đúng đắn và lòng ham học hỏi."
-  },
-  { 
-    id: 5, 
-    name: "Thủy Thiên Nhu", 
-    symbol: "䷄", 
-    meaning: "Đạo của sự Chờ đợi và Nuôi dưỡng niềm tin. Thời cơ chưa chín muồi.",
-    imagery: "Mây tụ trên trời nhưng chưa mưa. Hãy ăn uống, vui vẻ và chuẩn bị nội lực. Đừng nôn nóng mà hỏng việc lớn."
-  },
-  { 
-    id: 6, 
-    name: "Thiên Thủy Tụng", 
-    symbol: "䷅", 
-    meaning: "Sự tranh chấp và bất đồng. Đạo của việc tìm kiếm sự trung dung, hòa giải.",
-    imagery: "Trời và Nước đi ngược chiều nhau. Khi lòng người không đồng, tranh cãi nảy sinh. Kẻ trí biết dừng lại đúng lúc để tránh tai họa."
-  },
-  { 
-    id: 7, 
-    name: "Địa Thủy Sư", 
-    symbol: "䷆", 
-    meaning: "Đạo của sự Dẫn dắt và Kỷ luật. Sức mạnh của đám đông khi có minh chủ.",
-    imagery: "Nước ẩn trong lòng đất. Tượng trưng cho sức mạnh quần chúng. Cần sự chính nghĩa và kỷ luật thép để đạt được mục đích."
-  },
-  { 
-    id: 8, 
-    name: "Thủy Địa Tỷ", 
-    symbol: "䷇", 
-    meaning: "Sự thân thiện và đoàn kết. Đạo của việc tìm kiếm sự đồng điệu.",
-    imagery: "Nước chảy trên mặt đất, thấm nhuần và gắn kết. Người lãnh đạo cần đức độ để thu phục lòng người một cách tự nhiên."
-  },
-  { 
-    id: 9, 
-    name: "Phong Thiên Tiểu Súc", 
-    symbol: "䷈", 
-    meaning: "Sự tích lũy nhỏ. Sức mạnh của sự mềm mỏng và kiên nhẫn.",
-    imagery: "Gió thổi trên trời cao. Mây chưa đủ dày để mưa. Cần tu chỉnh đức hạnh nhỏ để chuẩn bị cho những bước tiến lớn sau này."
-  },
-  { 
-    id: 10, 
-    name: "Thiên Trạch Lý", 
-    symbol: "䷉", 
-    meaning: "Đạo của sự Hành xử và Lễ độ. Cẩn trọng như dẫm lên đuôi hổ.",
-    imagery: "Trời ở trên, Hồ ở dưới. Sự phân định tôn ti trật tự rõ ràng. Hành động đúng mực sẽ giúp vượt qua nguy hiểm một cách bình an."
-  },
-  { 
-    id: 11, 
-    name: "Địa Thiên Thái", 
-    symbol: "䷊", 
-    meaning: "Sự hanh thông và giao hòa. Thời kỳ thịnh vượng, âm dương tương tác.",
-    imagery: "Trời hạ mình xuống dưới, Đất vươn lên trên. Khí thế giao nhau tạo nên sự sống. Hãy trân trọng và giữ gìn sự hòa hợp này."
-  },
-  { 
-    id: 12, 
-    name: "Thiên Địa Bĩ", 
-    symbol: "䷋", 
-    meaning: "Sự bế tắc và ly tán. Thời kỳ suy vi, tiểu nhân đắc thế.",
-    imagery: "Trời và Đất xa rời nhau. Lòng người không thông, công việc đình trệ. Người quân tử nên ẩn mình để bảo toàn khí tiết."
-  },
-  { 
-    id: 13, 
-    name: "Thiên Hỏa Đồng Nhân", 
-    symbol: "䷌", 
-    meaning: "Đạo của sự Đại đồng. Đoàn kết dựa trên lý tưởng cao cả.",
-    imagery: "Lửa sáng dưới bầu trời. Sự minh bạch và công tâm thu hút mọi người. Thành công đến từ việc mở rộng lòng mình với cộng đồng."
-  },
-  { 
-    id: 14, 
-    name: "Hỏa Thiên Đại Hữu", 
-    symbol: "䷍", 
-    meaning: "Sự sở hữu lớn lao. Đạo của việc giữ gìn sự giàu sang bằng đức độ.",
-    imagery: "Mặt trời chiếu sáng giữa trời. Vạn vật đều hiển lộ. Cần sự khiêm tốn và sáng suốt để không bị sự thịnh vượng làm mờ mắt."
-  },
-  { 
-    id: 15, 
-    name: "Địa Sơn Khiêm", 
-    symbol: "䷎", 
-    meaning: "Đạo của sự Khiêm hạ. Càng cao quý càng nên nhún nhường.",
-    imagery: "Núi ẩn dưới đất. Người có tài mà không khoe khoang, có công mà không tự mãn. Đây là quẻ tốt nhất trong 64 quẻ."
-  },
-  { 
-    id: 16, 
-    name: "Lôi Địa Dự", 
-    symbol: "䷏", 
-    meaning: "Sự vui vẻ và chuẩn bị. Đạo của việc thuận theo lòng người.",
-    imagery: "Sấm vang trên mặt đất. Khơi dậy niềm vui và sự hăng hái. Cần có kế hoạch cụ thể để biến sự hào hứng thành kết quả thực tế."
-  },
-  { 
-    id: 63, 
-    name: "Thủy Hỏa Ký Tế", 
-    symbol: "䷾", 
-    meaning: "Mọi việc đã hoàn tất. Đạo của việc giữ gìn thành quả.",
-    imagery: "Nước ở trên lửa, sự cân bằng hoàn hảo. Nhưng 'vật cực tất phản', sau đỉnh cao là vực thẳm. Cần đề phòng sự chủ quan."
-  },
-  { 
-    id: 64, 
-    name: "Hỏa Thủy Vị Tế", 
-    symbol: "䷿", 
-    meaning: "Mọi việc chưa xong. Đạo của sự hy vọng và nỗ lực không ngừng.",
-    imagery: "Lửa ở trên nước, chưa giao hòa. Tượng trưng cho sự biến đổi vĩnh cửu. Cuộc đời là một hành trình tiếp nối, không bao giờ kết thúc."
-  }
+  { id: 1, name: "Thuần Càn", symbol: "䷀", meaning: "Đạo của sự Sáng tạo và Tự cường. 'Thiên hành kiện, quân tử dĩ tự cường bất tức'.", imagery: "Sáu con rồng biểu thị các giai đoạn của sự phát triển. Cần biết lúc nào nên ẩn mình (Tiềm long), lúc nào nên hành động (Phi long)." },
+  { id: 2, name: "Thuần Khôn", symbol: "䷁", meaning: "Đạo của sự Nhu thuận và Bao dung. 'Địa thế khôn, quân tử dĩ hậu đức tải vật'.", imagery: "Sức mạnh của đất mẹ, âm thầm nuôi dưỡng vạn vật mà không tranh công. Sự thành công đến từ việc biết phục tùng cái đúng." },
+  { id: 3, name: "Thủy Lôi Truân", symbol: "䷂", meaning: "Sự gian nan lúc mới khởi đầu. Mầm sống đang tích lũy nội lực để vươn lên.", imagery: "Sấm sét and mưa gió đang giao tranh. Trong sự hỗn loạn, mầm mống của trật tự mới đang hình thành. Cần kiên trì và tìm người giúp đỡ." },
+  { id: 4, name: "Sơn Thủy Mông", symbol: "䷃", meaning: "Sự mờ mịt, non nớt. Đạo của việc giáo dục và khai phóng tâm trí.", imagery: "Suối chảy dưới chân núi, sương mù bao phủ. Tượng trưng cho trí tuệ còn sơ khai, cần sự dẫn dắt đúng đắn và lòng ham học hỏi." },
+  { id: 5, name: "Thủy Thiên Nhu", symbol: "䷄", meaning: "Đạo của sự Chờ đợi và Nuôi dưỡng niềm tin. Thời cơ chưa chín muồi.", imagery: "Mây tụ trên trời nhưng chưa mưa. Hãy ăn uống, vui vẻ và chuẩn bị nội lực. Đừng nôn nóng mà hỏng việc lớn." },
+  { id: 6, name: "Thiên Thủy Tụng", symbol: "䷅", meaning: "Sự tranh chấp và bất đồng. Đạo của việc tìm kiếm sự trung dung, hòa giải.", imagery: "Trời và Nước đi ngược chiều nhau. Khi lòng người không đồng, tranh cãi nảy sinh. Kẻ trí biết dừng lại đúng lúc để tránh tai họa." },
+  { id: 7, name: "Địa Thủy Sư", symbol: "䷆", meaning: "Đạo của sự Dẫn dắt và Kỷ luật. Sức mạnh của đám đông khi có minh chủ.", imagery: "Nước ẩn trong lòng đất. Tượng trưng cho sức mạnh quần chúng. Cần sự chính nghĩa và kỷ luật thép để đạt được mục đích." },
+  { id: 8, name: "Thủy Địa Tỷ", symbol: "䷇", meaning: "Sự thân thiện và đoàn kết. Đạo của việc tìm kiếm sự đồng điệu.", imagery: "Nước chảy trên mặt đất, thấm nhuần và gắn kết. Người lãnh đạo cần đức độ để thu phục lòng người một cách tự nhiên." },
+  { id: 9, name: "Phong Thiên Tiểu Súc", symbol: "䷈", meaning: "Sự tích lũy nhỏ. Sức mạnh của sự mềm mỏng và kiên nhẫn.", imagery: "Gió thổi trên trời cao. Mây chưa đủ dày để mưa. Cần tu chỉnh đức hạnh nhỏ để chuẩn bị cho những bước tiến lớn sau này." },
+  { id: 10, name: "Thiên Trạch Lý", symbol: "䷉", meaning: "Đạo của sự Hành xử và Lễ độ. Cẩn trọng như dẫm lên đuôi hổ.", imagery: "Trời ở trên, Hồ ở dưới. Sự phân định tôn ti trật tự rõ ràng. Hành động đúng mực sẽ giúp vượt qua nguy hiểm một cách bình an." },
+  { id: 11, name: "Địa Thiên Thái", symbol: "䷊", meaning: "Sự hanh thông và giao hòa. Thời kỳ thịnh vượng, âm dương tương tác.", imagery: "Trời hạ mình xuống dưới, Đất vươn lên trên. Khí thế giao nhau tạo nên sự sống. Hãy trân trọng và giữ gìn sự hòa hợp này." },
+  { id: 12, name: "Thiên Địa Bĩ", symbol: "䷋", meaning: "Sự bế tắc và ly tán. Thời kỳ suy vi, tiểu nhân đắc thế.", imagery: "Trời và Đất xa rời nhau. Lòng người không thông, công việc đình trệ. Người quân tử nên ẩn mình để bảo toàn khí tiết." },
+  { id: 13, name: "Thiên Hỏa Đồng Nhân", symbol: "䷌", meaning: "Đạo của sự Đại đồng. Đoàn kết dựa trên lý tưởng cao cả.", imagery: "Lửa sáng dưới bầu trời. Sự minh bạch và công tâm thu hút mọi người. Thành công đến từ việc mở rộng lòng mình với cộng đồng." },
+  { id: 14, name: "Hỏa Thiên Đại Hữu", symbol: "䷍", meaning: "Sự sở hữu lớn lao. Đạo của việc giữ gìn sự giàu sang bằng đức độ.", imagery: "Mặt trời chiếu sáng giữa trời. Vạn vật đều hiển lộ. Cần sự khiêm tốn and sáng suốt để không bị sự thịnh vượng làm mờ mắt." },
+  { id: 15, name: "Địa Sơn Khiêm", symbol: "䷎", meaning: "Đạo của sự Khiêm hạ. Càng cao quý càng nên nhún nhường.", imagery: "Núi ẩn dưới đất. Người có tài mà không khoe khoang, có công mà không tự mãn. Đây là quẻ tốt nhất trong 64 quẻ." },
+  { id: 16, name: "Lôi Địa Dự", symbol: "䷏", meaning: "Sự vui vẻ và chuẩn bị. Đạo của việc thuận theo lòng người.", imagery: "Sấm vang trên mặt đất. Khơi dậy niềm vui và sự hăng hái. Cần có kế hoạch cụ thể để biến sự hào hứng thành kết quả thực tế." },
+  { id: 17, name: "Trạch Lôi Tùy", symbol: "䷐", meaning: "Sự tùy thuận. Đi theo cái đúng, thuận theo thời thế.", imagery: "Sấm ở trong đầm. Người quân tử khi nghỉ ngơi thì vào trong nhà, khi hành động thì theo lẽ phải. Thành công đến từ sự linh hoạt." },
+  { id: 18, name: "Sơn Phong Cổ", symbol: "䷑", meaning: "Sự đổ nát, hủ bại. Đạo của việc sửa chữa và đổi mới.", imagery: "Gió dừng dưới chân núi, không khí tù đọng sinh ra sâu bọ. Cần sự quyết tâm và phương pháp đúng đắn để chấn hưng lại sự nghiệp." },
+  { id: 19, name: "Địa Trạch Lâm", symbol: "䷒", meaning: "Sự tiến đến, lớn mạnh. Thời kỳ phát triển đầy triển vọng.", imagery: "Đất ở trên đầm, bao dung và che chở. Người lãnh đạo cần gần gũi và dạy dỗ nhân dân. Tuy nhiên, cần đề phòng sự suy thoái sau đỉnh cao." },
+  { id: 20, name: "Phong Địa Quan", symbol: "䷓", meaning: "Sự quan sát, xem xét. Đạo của việc tự soi rọi và làm gương.", imagery: "Gió thổi trên mặt đất. Vạn vật đều được chứng kiến. Người quân tử cần giữ tâm trong sáng để người khác nhìn vào mà cảm hóa." },
+  { id: 21, name: "Hỏa Lôi Phệ Hạp", symbol: "䷔", meaning: "Sự cắn đứt, thực thi pháp luật. Đạo của việc loại bỏ chướng ngại.", imagery: "Sấm sét và chớp giật. Sự uy nghiêm của pháp luật giúp làm sáng tỏ mọi việc. Cần sự công minh và quyết đoán để duy trì trật tự." },
+  { id: 22, name: "Sơn Hỏa Bí", symbol: "䷕", meaning: "Sự trang sức, vẻ đẹp bên ngoài. Đạo của việc coi trọng thực chất hơn hình thức.", imagery: "Lửa sáng dưới chân núi. Vẻ đẹp rực rỡ nhưng chỉ là tạm thời. Cần dùng sự trang sức để làm sáng tỏ đạo lý, thay vì che đậy sự trống rỗng." },
+  { id: 23, name: "Sơn Địa Bác", symbol: "䷖", meaning: "Sự tiêu mòn, sụp đổ. Thời kỳ tiểu nhân lấn lướt quân tử.", imagery: "Núi bám vào đất, nhưng đang bị xói mòn. Không nên hành động lúc này. Hãy tĩnh lặng để bảo toàn nội lực và chờ đợi thời cơ." },
+  { id: 24, name: "Địa Lôi Phục", symbol: "䷗", meaning: "Sự trở lại, hồi sinh. Ánh sáng hy vọng bắt đầu xuất hiện.", imagery: "Sấm vang trong lòng đất. Sự sống đang cựa mình trở lại. Cần sự kiên nhẫn và thận trọng trong những bước đi đầu tiên của chu kỳ mới." },
+  { id: 25, name: "Thiên Lôi Vô Vọng", symbol: "䷘", meaning: "Sự chân thực, không vọng động. Thuận theo thiên lý.", imagery: "Sấm nổ dưới trời. Vạn vật đều tuân theo quy luật tự nhiên. Hành động không toan tính vụ lợi sẽ mang lại kết quả tốt đẹp bền vững." },
+  { id: 26, name: "Sơn Thiên Đại Súc", symbol: "䷙", meaning: "Sự tích lũy lớn lao. Đạo của việc bồi đắp tri thức và đức hạnh.", imagery: "Trời ở trong núi. Sức chứa vô hạn. Người quân tử cần học hỏi không ngừng để làm giàu vốn sống và chuẩn bị cho những trọng trách lớn." },
+  { id: 27, name: "Sơn Lôi Di", symbol: "䷚", meaning: "Sự nuôi dưỡng. Đạo của việc chăm sóc bản thân và người khác.", imagery: "Dưới núi có sấm. Tượng trưng cho cái miệng đang nhai. Cần chú trọng vào việc ăn uống lành mạnh và lời nói đúng mực." },
+  { id: 28, name: "Trạch Phong Đại Quá", symbol: "䷛", meaning: "Sự quá mức, gánh nặng. Đạo của việc dũng cảm vượt qua thử thách.", imagery: "Đầm nước ngập cả cây. Tình thế nguy kịch nhưng cũng là cơ hội để bứt phá. Cần sự quyết đoán và không sợ hãi trước những thay đổi lớn." },
+  { id: 29, name: "Thuần Khảm", symbol: "䷜", meaning: "Sự hiểm nguy, trùng điệp. Đạo của việc giữ tâm kiên định trong gian khó.", imagery: "Nước chảy không ngừng, vượt qua mọi hẻm vực. Cần lòng dũng cảm và sự chân thành để vượt qua những giai đoạn khó khăn nhất của cuộc đời." },
+  { id: 30, name: "Thuần Ly", symbol: "䷝", meaning: "Sự sáng suốt, bám dựa. Đạo của việc tìm nơi nương tựa đúng đắn.", imagery: "Lửa cháy bùng lên. Ánh sáng soi rọi mọi ngóc ngách. Cần sự trung chính và bám sát vào những giá trị đạo đức để không bị thiêu rụi." },
+  { id: 31, name: "Trạch Sơn Hàm", symbol: "䷞", meaning: "Sự cảm ứng, giao hòa. Đạo của tình yêu và sự thấu hiểu.", imagery: "Đầm trên núi cao. Sự tương tác tự nhiên giữa âm và dương. Thành công đến từ sự chân thành và không vụ lợi trong các mối quan hệ." },
+  { id: 32, name: "Lôi Phong Hằng", symbol: "䷟", meaning: "Sự bền vững, lâu dài. Đạo của việc giữ vững lập trường.", imagery: "Sấm và Gió cùng hoạt động. Sự vận động không ngừng nhưng có quy luật. Cần sự kiên trì và bền bỉ để đạt được thành quả cuối cùng." },
+  { id: 33, name: "Thiên Sơn Độn", symbol: "䷠", meaning: "Sự ẩn lui, rút lui. Đạo của việc biết dừng lại đúng lúc.", imagery: "Trời xa dần núi. Khi thời thế không thuận, người quân tử nên lui về để bảo toàn khí tiết và chờ đợi cơ hội khác." },
+  { id: 34, name: "Lôi Thiên Đại Tráng", symbol: "䷡", meaning: "Sự lớn mạnh, uy thế. Đạo của việc sử dụng sức mạnh đúng mực.", imagery: "Sấm vang trên trời. Sức mạnh lừng lẫy. Cần sự chính trực và lễ độ để không biến sức mạnh thành sự bạo ngược." },
+  { id: 35, name: "Hỏa Địa Tấn", symbol: "䷢", meaning: "Sự tiến lên, hiển lộ. Đạo của việc phát huy tài năng.", imagery: "Mặt trời mọc trên mặt đất. Ánh sáng lan tỏa khắp nơi. Đây là thời điểm thuận lợi để thăng tiến và khẳng định vị thế của bản thân." },
+  { id: 36, name: "Địa Hỏa Minh Di", symbol: "䷣", meaning: "Sự tổn thương, che lấp. Đạo của việc giữ gìn ánh sáng trong bóng tối.", imagery: "Mặt trời lặn xuống lòng đất. Ánh sáng bị che khuất. Cần sự kiên nhẫn và khéo léo để bảo vệ lý tưởng trong hoàn cảnh khó khăn." },
+  { id: 37, name: "Phong Hỏa Gia Nhân", symbol: "䷤", meaning: "Đạo của gia đình. Sự ổn định bắt đầu từ bên trong.", imagery: "Gió sinh ra từ lửa. Sự ấm áp và trật tự trong gia đình là nền tảng cho mọi thành công ngoài xã hội. Cần sự nghiêm túc và yêu thương." },
+  { id: 38, name: "Hỏa Trạch Khuê", symbol: "䷥", meaning: "Sự mâu thuẫn, khác biệt. Đạo của việc tìm kiếm sự đồng nhất trong đa dạng.", imagery: "Lửa bốc lên, Nước đầm chảy xuống. Hai hướng ngược nhau. Cần sự bao dung và sáng suốt để hòa giải những bất đồng nhỏ." },
+  { id: 39, name: "Thủy Sơn Kiển", symbol: "䷦", meaning: "Sự gian nan, ngăn trở. Đạo của việc biết dừng lại để suy ngẫm.", imagery: "Nước trên núi cao, đường đi hiểm trở. Không nên cố tiến lên. Hãy quay lại tìm kiếm sự giúp đỡ và hoàn thiện bản thân." },
+  { id: 40, name: "Lôi Thủy Giải", symbol: "䷧", meaning: "Sự giải tỏa, tha thứ. Đạo của việc trút bỏ gánh nặng.", imagery: "Sấm và Mưa làm tan biến sự oi bức. Những khó khăn bắt đầu được tháo gỡ. Hãy nhanh chóng hành động và bao dung với lỗi lầm cũ." },
+  { id: 41, name: "Sơn Trạch Tổn", symbol: "䷨", meaning: "Sự bớt đi, tổn thất. Đạo của việc hy sinh cái nhỏ để được cái lớn.", imagery: "Dưới núi có đầm. Nước đầm làm ẩm chân núi. Cần sự chân thành và biết tiết chế ham muốn cá nhân để đạt được sự tăng trưởng tâm linh." },
+  { id: 42, name: "Phong Lôi Ích", symbol: "䷩", meaning: "Sự tăng thêm, lợi ích. Đạo của việc giúp người để giúp mình.", imagery: "Gió và Sấm cùng tăng cường sức mạnh. Thời điểm thuận lợi để thực hiện những kế hoạch lớn và giúp đỡ cộng đồng." },
+  { id: 43, name: "Trạch Thiên Quải", symbol: "䷪", meaning: "Sự quyết liệt, vỡ lở. Đạo của việc loại bỏ cái xấu một cách dứt khoát.", imagery: "Nước đầm dâng lên tận trời. Tình thế không thể cứu vãn. Cần sự dũng cảm và công tâm để thực hiện những thay đổi cần thiết." },
+  { id: 44, name: "Thiên Phong Cấu", symbol: "䷫", meaning: "Sự gặp gỡ bất ngờ. Đạo của việc đề phòng những ảnh hưởng tiêu cực.", imagery: "Gió thổi dưới trời. Sự tiếp xúc ngẫu nhiên. Cần cảnh giác với những cám dỗ hoặc những yếu tố không lành mạnh mới xuất hiện." },
+  { id: 45, name: "Trạch Địa Tụy", symbol: "䷬", meaning: "Sự tụ họp, đoàn kết. Đạo của việc tập hợp sức mạnh.", imagery: "Đầm trên mặt đất. Nước tụ lại thành hồ lớn. Cần sự lãnh đạo sáng suốt và những mục tiêu chung để duy trì sự gắn kết lâu dài." },
+  { id: 46, name: "Địa Phong Thăng", symbol: "䷭", meaning: "Sự bay lên, thăng tiến. Đạo của việc phát triển bền vững.", imagery: "Cây mọc lên từ lòng đất. Sự tăng trưởng chậm rãi nhưng chắc chắn. Cần sự kiên trì và không ngừng nỗ lực để đạt được đỉnh cao." },
+  { id: 47, name: "Trạch Thủy Khốn", symbol: "䷮", meaning: "Sự khốn cùng, bế tắc. Đạo của việc giữ vững niềm tin trong nghịch cảnh.", imagery: "Đầm không có nước, cây cối khô héo. Tình thế cực kỳ khó khăn. Người quân tử cần dùng lời nói ít đi và hành động thực tế để vượt qua." },
+  { id: 48, name: "Thủy Phong Tỉnh", symbol: "䷯", meaning: "Đạo của cái giếng. Sự cung cấp không ngừng và giá trị cốt lõi.", imagery: "Nước dưới cây. Giếng nước nuôi sống dân làng nhưng không bao giờ thay đổi vị trí. Cần giữ gìn phẩm chất đạo đức trong sạch." },
+  { id: 49, name: "Trạch Hỏa Cách", symbol: "䷰", meaning: "Sự cải cách, thay đổi. Đạo của việc đổi mới theo đúng thời thế.", imagery: "Lửa trong đầm. Sự biến đổi mạnh mẽ. Cần sự chuẩn bị kỹ lưỡng và lòng tin của mọi người để cuộc cách mạng thành công." },
+  { id: 50, name: "Hỏa Phong Đỉnh", symbol: "䷱", meaning: "Đạo của cái đỉnh. Sự thiết lập trật tự mới và nuôi dưỡng tài năng.", imagery: "Lửa dưới gỗ. Nấu thức ăn trong đỉnh. Tượng trưng cho sự ổn định, quyền lực và việc trọng dụng người hiền tài." },
+  { id: 51, name: "Thuần Chấn", symbol: "䷲", meaning: "Sự chấn động, sấm sét. Đạo của việc tỉnh thức và hành động.", imagery: "Sấm nổ liên tiếp. Gây ra sự sợ hãi nhưng cũng làm vạn vật bừng tỉnh. Cần giữ tâm thái bình tĩnh để biến sự biến động thành cơ hội." },
+  { id: 52, name: "Thuần Cấn", symbol: "䷳", meaning: "Sự dừng lại, tĩnh lặng. Đạo của việc làm chủ bản thân.", imagery: "Núi chồng lên núi. Sự bất động tuyệt đối. Cần biết lúc nào nên dừng lại và giữ cho tâm trí không bị xao động bởi ngoại cảnh." },
+  { id: 53, name: "Phong Sơn Tiệm", symbol: "䷴", meaning: "Sự tiến triển tuần tự. Đạo của việc làm việc có kế hoạch.", imagery: "Cây mọc trên núi. Sự phát triển tự nhiên và vững chắc. Cần sự kiên nhẫn và tuân thủ các bước đi cần thiết để đạt được thành công bền vững." },
+  { id: 54, name: "Lôi Trạch Quy Muội", symbol: "䷵", meaning: "Sự kết thúc không trọn vẹn. Đạo của việc cẩn trọng trong các mối quan hệ.", imagery: "Sấm trên đầm. Sự kết hợp vội vã và không đúng nguyên tắc. Cần xem xét lại các cam kết để tránh những rắc rối về sau." },
+  { id: 55, name: "Lôi Hỏa Phong", symbol: "䷶", meaning: "Sự thịnh vượng, dồi dào. Đạo của việc chia sẻ sự giàu sang.", imagery: "Sấm và Chớp cùng xuất hiện. Ánh sáng rực rỡ. Cần sự công minh và rộng lượng để duy trì sự thịnh vượng lâu dài." },
+  { id: 56, name: "Hỏa Sơn Lữ", symbol: "䷷", meaning: "Sự phiêu bạt, lữ khách. Đạo của việc thích nghi với hoàn cảnh mới.", imagery: "Lửa trên núi. Đám cháy lan nhanh và không có nơi dừng chân cố định. Cần sự khiêm tốn và cẩn trọng khi ở nơi đất khách quê người." },
+  { id: 57, name: "Thuần Tốn", symbol: "䷸", meaning: "Sự nhu thuận, gió thổi. Đạo của việc thâm nhập và ảnh hưởng nhẹ nhàng.", imagery: "Gió thổi liên tiếp. Có thể len lỏi vào mọi ngóc ngách. Cần sự kiên trì và mục tiêu rõ ràng để tạo ra những thay đổi sâu sắc." },
+  { id: 58, name: "Thuần Đoài", symbol: "䷹", meaning: "Sự vui vẻ, đầm ấm. Đạo của việc giao tiếp chân thành.", imagery: "Đầm nước liền nhau. Sự tươi mát và niềm vui lan tỏa. Cần giữ gìn sự chính trực trong lời nói để niềm vui được bền lâu." },
+  { id: 59, name: "Phong Thủy Hoán", symbol: "䷺", meaning: "Sự tan biến, giải tỏa. Đạo của việc vượt qua sự chia rẽ.", imagery: "Gió thổi trên mặt nước làm tan sương mù. Cần sự đoàn kết và những lý tưởng chung để gắn kết mọi người lại với nhau." },
+  { id: 60, name: "Thủy Trạch Tiết", symbol: "䷻", meaning: "Sự tiết chế, chừng mực. Đạo của việc đặt ra các giới hạn.", imagery: "Nước trong đầm. Nếu không có bờ sẽ tràn lan. Cần sự kỷ luật và biết điểm dừng để cuộc sống luôn ổn định và hài hòa." },
+  { id: 61, name: "Phong Trạch Trung Phu", symbol: "䷼", meaning: "Sự chân thành, tin cậy. Đạo của việc cảm hóa bằng đức độ.", imagery: "Gió trên đầm nước. Sự thấu hiểu sâu sắc. Lòng chân thành có thể lay chuyển được cả những vật vô tri và tạo nên sự gắn kết tuyệt vời." },
+  { id: 62, name: "Lôi Sơn Tiểu Quá", symbol: "䷽", meaning: "Sự quá mức nhỏ. Đạo của việc cẩn trọng trong những việc chi tiết.", imagery: "Sấm trên núi cao. Tiếng vang lớn nhưng không đi xa. Cần sự khiêm tốn và chú ý đến những điều nhỏ nhặt để tránh sai lầm lớn." },
+  { id: 63, name: "Thủy Hỏa Ký Tế", symbol: "䷾", meaning: "Mọi việc đã hoàn tất. Đạo của việc giữ gìn thành quả.", imagery: "Nước ở trên lửa, sự cân bằng hoàn hảo. Nhưng 'vật cực tất phản', sau đỉnh cao là vực thẳm. Cần đề phòng sự chủ quan." },
+  { id: 64, name: "Hỏa Thủy Vị Tế", symbol: "䷿", meaning: "Mọi việc chưa xong. Đạo của sự hy vọng và nỗ lực không ngừng.", imagery: "Lửa ở trên nước, chưa giao hòa. Tượng trưng cho sự biến đổi vĩnh cửu. Cuộc đời là một hành trình tiếp nối, không bao giờ kết thúc." }
 ];
 
 // Binary representation to King Wen sequence index (1-based)
@@ -246,9 +184,15 @@ export function getHexagramByLines(lines: number[]) {
     id,
     name,
     symbol: fullInfo?.symbol || "䷀",
-    meaning: fullInfo?.meaning || "Đang cập nhật triết lý cho quẻ này theo Nguyễn Duy Cần...",
-    imagery: fullInfo?.imagery || "Đang cập nhật hình tượng cho quẻ này..."
+    meaning: fullInfo?.meaning || "Triết lý về sự biến thông và hài hòa của vũ trụ.",
+    imagery: fullInfo?.imagery || "Hình tượng tượng trưng cho sự vận động không ngừng của đạo trời."
   };
+}
+
+export interface FortunePillar {
+  name: string;
+  status: 'Mạnh' | 'Khá' | 'Trung bình' | 'Yếu';
+  description: string;
 }
 
 export interface BatTuResult {
@@ -259,6 +203,8 @@ export interface BatTuResult {
   advice: string;
   hexagramName: string;
   hexagramSymbol: string;
+  fortunePillars: FortunePillar[];
+  overallFortune: string;
 }
 
 export function getBatTuHaLac(birthDate: Date, birthHour: number): BatTuResult {
@@ -274,6 +220,49 @@ export function getBatTuHaLac(birthDate: Date, birthHour: number): BatTuResult {
   const hexName = HEXAGRAM_NAMES[index];
   const hexInfo = HEXAGRAMS.find(h => h.name === hexName);
   
+  // Calculate Fortune Pillars (Tam Cát)
+  const thienCatVal = (seed % 10);
+  const diaCatVal = ((seed >> 2) % 10);
+  const nhanCatVal = ((seed >> 4) % 10);
+
+  const getStatus = (val: number): 'Mạnh' | 'Khá' | 'Trung bình' | 'Yếu' => {
+    if (val >= 8) return 'Mạnh';
+    if (val >= 5) return 'Khá';
+    if (val >= 3) return 'Trung bình';
+    return 'Yếu';
+  };
+
+  const fortunePillars: FortunePillar[] = [
+    {
+      name: "Thiên Cát (Thiên Thời)",
+      status: getStatus(thienCatVal),
+      description: "Đại diện cho thời cơ, vận may từ trời và sự hỗ trợ từ quý nhân bên ngoài."
+    },
+    {
+      name: "Địa Cát (Địa Lợi)",
+      status: getStatus(diaCatVal),
+      description: "Đại diện cho môi trường sống, nền tảng tài chính và sự ổn định của gia đình."
+    },
+    {
+      name: "Nhân Cát (Nhân Hòa)",
+      status: getStatus(nhanCatVal),
+      description: "Đại diện cho sức mạnh nội tại, các mối quan hệ xã hội và sự hòa hợp trong giao tiếp."
+    }
+  ];
+
+  const strongPillars = fortunePillars.filter(p => p.status === 'Mạnh' || p.status === 'Khá').length;
+  let overallFortune = "";
+  
+  if (strongPillars === 3) {
+    overallFortune = "Đại Cát Đại Lợi: Bạn sở hữu cả 3 trụ cột may mắn. Mọi việc hanh thông, dễ đạt thành tựu rực rỡ.";
+  } else if (strongPillars === 2) {
+    overallFortune = "Song Cát Tề Lai: Bạn có 2 trụ cột mạnh mẽ. Cuộc sống ổn định, có nhiều cơ hội phát triển tốt.";
+  } else if (strongPillars === 1) {
+    overallFortune = "Độc Cát Khởi Vận: Bạn có 1 trụ cột nổi trội. Hãy tập trung phát huy thế mạnh này để vượt qua khó khăn.";
+  } else {
+    overallFortune = "Tự Lực Cánh Sinh: Các trụ cột ở mức trung bình. Thành công đến từ sự nỗ lực bền bỉ của chính bản thân bạn.";
+  }
+
   // Generate insights based on the hexagram and birth info
   const personalities = [
     "Bạn là người có ý chí kiên cường, luôn khao khát vươn lên và không ngại thử thách.",
@@ -322,7 +311,9 @@ export function getBatTuHaLac(birthDate: Date, birthHour: number): BatTuResult {
     luck: lucks[(seed + 3) % lucks.length],
     advice: advices[(seed + 4) % advices.length],
     hexagramName: hexName,
-    hexagramSymbol: hexInfo?.symbol || "䷀"
+    hexagramSymbol: hexInfo?.symbol || "䷀",
+    fortunePillars,
+    overallFortune
   };
 }
 

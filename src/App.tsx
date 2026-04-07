@@ -46,8 +46,6 @@ import { cn } from './lib/utils';
 import { getSolarTerm, castHexagram, HEXAGRAMS, getAllLunarFestivals, getLunarFestivals, getLunarDate, getAuspiciousInfo, getLunarDateDetails, getSolarTermInfo, estimateSolarDate, getWorldHistory, getGregorianHolidays, getKabbalahInsight, getHexagramByLines, HEXAGRAM_NAMES, getBatTuHaLac } from './lib/cultural';
 import type { HistoryEvent, BatTuResult } from './lib/cultural';
 
-import { ChatLookup } from './components/ChatLookup';
-
 // Set up pdfjs worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
@@ -564,12 +562,6 @@ export default function App() {
             onClick={() => setActiveTab('cultural')} 
           />
           <SidebarItem 
-            icon={MessageSquare} 
-            label="Trợ Lý AI" 
-            active={activeTab === 'chat'} 
-            onClick={() => setActiveTab('chat')} 
-          />
-          <SidebarItem 
             icon={Compass} 
             label="Kinh Dịch" 
             active={activeTab === 'iching'} 
@@ -835,17 +827,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {activeTab === 'chat' && (
-              <motion.div
-                key="chat"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="max-w-3xl mx-auto"
-              >
-                <ChatLookup />
-              </motion.div>
-            )}
+
 
             {activeTab === 'cultural' && (
               <motion.div
@@ -1408,6 +1390,49 @@ export default function App() {
                         <p className="text-xl text-white/80 font-medium leading-relaxed max-w-2xl">
                           Dựa trên Bát Tự Hà Lạc, cuộc đời bạn mang năng lượng của quẻ <strong>{batTuResult.hexagramName}</strong>. Đây là một hành trình đầy ý nghĩa với những đặc điểm riêng biệt.
                         </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-white rounded-[40px] p-10 shadow-sm border border-slate-100">
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center">
+                          <Sparkles size={20} />
+                        </div>
+                        <h5 className="text-2xl font-black text-slate-800">Tam Cát (Ba Trụ Cột May Mắn)</h5>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        {batTuResult.fortunePillars.map((pillar, idx) => (
+                          <div key={idx} className="bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:border-brand-primary/30 transition-all group">
+                            <div className="flex items-center justify-between mb-4">
+                              <p className="font-bold text-slate-800">{pillar.name}</p>
+                              <span className={cn(
+                                "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider",
+                                pillar.status === 'Mạnh' ? "bg-emerald-100 text-emerald-600" :
+                                pillar.status === 'Khá' ? "bg-blue-100 text-blue-600" :
+                                pillar.status === 'Trung bình' ? "bg-amber-100 text-amber-600" :
+                                "bg-slate-200 text-slate-500"
+                              )}>
+                                {pillar.status}
+                              </span>
+                            </div>
+                            <p className="text-sm text-slate-500 leading-relaxed">
+                              {pillar.description}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="bg-indigo-50 rounded-3xl p-6 border border-indigo-100 flex items-start gap-4">
+                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm shrink-0">
+                          <Zap size={24} />
+                        </div>
+                        <div>
+                          <p className="text-indigo-900 font-bold text-lg mb-1">Tổng Quan Vận Mệnh</p>
+                          <p className="text-indigo-700 leading-relaxed">
+                            {batTuResult.overallFortune}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
